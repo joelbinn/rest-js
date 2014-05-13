@@ -20,6 +20,7 @@ import javax.script.ScriptException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.function.Function;
 
 /**
  * REST resource for loading JS modules.
@@ -28,28 +29,8 @@ import java.io.LineNumberReader;
 @EnableAutoConfiguration
 public class JsModules {
 
-    public interface Calculate {
+    public interface Calculate extends Function<Params, Result>{
         Result apply(Params p);
-    }
-
-    public JsModules() {
-        try {
-            ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-            engine.eval(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("common.js")));
-            engine.eval(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("module1.js")));
-            Invocable invocable = (Invocable) engine;
-
-            Params params = new Params(
-                    new Params.CostRow[]{new Params.CostRow(true, new int[]{10, 20, 30})},
-                    new Params.CoFinancingRow[]{new Params.CoFinancingRow(true, new int[]{3, 11, 19})}
-            );
-            Calculate c = invocable.getInterface(Calculate.class);
-            Result result = c.apply(params);
-            System.out.println("result = " + result);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @RequestMapping(value = "/module/{name}", method = RequestMethod.GET, produces = "application/javascript")

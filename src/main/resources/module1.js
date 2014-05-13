@@ -1,3 +1,8 @@
+/**
+ * The calculate(params) function of module1
+ * @param params a javascript object mapped from se.joelabs.restjs.Params
+ * @returns a javascript object: {value: Integer[]}
+ */
 function calculate(params) {
   var i, j;
   var nAmount = params.costs[0].amounts.length;
