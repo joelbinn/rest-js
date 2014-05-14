@@ -20,7 +20,6 @@ import javax.script.ScriptException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.util.function.Function;
 
 /**
  * REST resource for loading JS modules.
@@ -29,7 +28,7 @@ import java.util.function.Function;
 @EnableAutoConfiguration
 public class JsModules {
 
-    public interface Calculate extends Function<Params, Result>{
+    public interface Calculate {
         Result apply(Params p);
     }
 
